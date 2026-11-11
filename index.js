@@ -8,7 +8,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Safe loader to prevent top-level module crashes from killing the container silently
 function loadModules() {
   const dataset = require('./lib/dataset');
   const vectorstore = require('./lib/vectorstore');
@@ -16,7 +15,6 @@ function loadModules() {
   return { dataset, vectorstore, gemma };
 }
 
-// Health check endpoint
 app.get('/api/health', async (req, res) => {
   try {
     const { vectorstore, gemma } = loadModules();
@@ -35,7 +33,6 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// Ingest endpoint
 app.post('/api/ingest', async (req, res) => {
   try {
     const { dataset, vectorstore } = loadModules();
@@ -56,7 +53,6 @@ app.post('/api/ingest', async (req, res) => {
   }
 });
 
-// Query endpoint
 app.post('/api/query', async (req, res) => {
   const { question, topK } = req.body || {};
   if (!question || typeof question !== 'string') {
