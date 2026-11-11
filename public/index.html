@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gemma Sci/Tech RAG Assistant — AG News</title>
+<title>Gemma Sci/Tech RAG — AG News</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -32,7 +32,7 @@
 <body class="bg-[#040712] text-slate-100 dark:bg-[#040712] dark:text-slate-100 bg-slate-50 text-slate-900 min-h-screen font-sans selection:bg-indigo-500 selection:text-white overflow-x-hidden relative select-none transition-colors duration-300">
 
 <div id="pano-container" class="fixed inset-0 -z-30 overflow-hidden w-full h-full">
-  <img id="pano-bg" src="panorama--img.jpg" alt="Panorama Background" class="absolute top-0 left-0 h-full w-[300vw] max-none object-cover opacity-50 mix-blend-luminosity select-none" style="will-change: transform;">
+  <img id="pano-bg" src="panorama-img.jpg" alt="Panorama Background" class="absolute top-0 left-0 h-full w-[300vw] max-none object-cover opacity-50 mix-blend-luminosity select-none" style="will-change: transform;">
   <div id="pano-overlay" class="absolute inset-0 bg-[#040712]/85 dark:bg-[#040712]/85 bg-slate-100/75 pointer-events-none transition-colors duration-300"></div>
 </div>
 
@@ -97,7 +97,6 @@
 </div>
 
 <script>
-  // Initialize GSAP Draggable for physics-powered 360 panorama control
   gsap.registerPlugin(Draggable);
 
   const panoBg = document.getElementById('pano-bg');
@@ -129,7 +128,6 @@
     Draggable.get(panoBg).applyBounds(updateBounds());
   });
 
-  // Background Canvas animation logic with High Contrast Palettes (Dark vs Light)
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
 
@@ -150,11 +148,9 @@
   const rectCount = 26;
   const rectangles = [];
 
-  // High contrast vibrant dark palette
   const darkPalette = ['rgba(99, 102, 241, 0.28)', 'rgba(139, 92, 246, 0.25)', 'rgba(14, 165, 233, 0.25)', 'rgba(236, 72, 153, 0.20)'];
   const darkBorderPalette = ['rgba(99, 102, 241, 0.7)', 'rgba(139, 92, 246, 0.65)', 'rgba(14, 165, 233, 0.65)', 'rgba(236, 72, 153, 0.55)'];
 
-  // High contrast vibrant second light palette (Sophisticated Indigo/Amber/Cyan accents)
   const lightPalette = ['rgba(79, 70, 229, 0.18)', 'rgba(147, 51, 234, 0.15)', 'rgba(2, 132, 199, 0.16)', 'rgba(217, 70, 239, 0.14)'];
   const lightBorderPalette = ['rgba(79, 70, 229, 0.5)', 'rgba(147, 51, 234, 0.45)', 'rgba(2, 132, 199, 0.45)', 'rgba(217, 70, 239, 0.4)'];
 
@@ -226,7 +222,6 @@
   }
   animate();
 
-  // Day/Night Theme Switcher Logic with Second Light Palette Support
   const themeToggleBtn = document.getElementById('themeToggleBtn');
   const themeIcon = document.getElementById('themeIcon');
 
@@ -332,3 +327,4 @@
 </script>
 </body>
 </html>
+

@@ -58,7 +58,6 @@ Fill in:
 ### 3. Run locally
 ```bash
 npm start
-# Server on http://localhost:3000
 ```
 
 ### 4. Ingest the dataset
