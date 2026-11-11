@@ -1,7 +1,7 @@
 {
   "name": "gemma-agnews-scitech-rag",
   "version": "1.0.0",
-  "description": "Gemma-powered RAG fact-checking/topic assistant over the AG News Sci/Tech split (Hack Fiesta Miami 2026 - Build w Gemma)",
+  "description": "Gemma-powered RAG fact-checking/topic extension over the AG News Sci/Tech split (Hack Fiesta Miami 2026 - Build w Gemma)",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {

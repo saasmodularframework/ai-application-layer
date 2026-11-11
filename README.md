@@ -1,23 +1,17 @@
 # ai-application-layer
-# Gemma Sci/Tech RAG Assistant (AG News)
+# Gemma Sci/Tech RAG Extension (AG News)
 
-A Gemma-powered retrieval-augmented fact-checking / topic assistant built for
+A Gemma-powered retrieval-augmented fact-checking / topic extension built for
 **Hack Fiesta Miami — Build w Gemma (August 2026)**. It ingests only the
 **Sci/Tech** slice of the AG News dataset directly from Hugging Face, indexes
 it in **ChromaDB** using **LlamaIndex.TS** for chunking, and answers questions
 about the articles using a **Gemma** model called through the **Vercel AI SDK
 (ai-sdk)**.
 
-## Live demo
-
-- Hosted app: `<add your Vercel URL here>`
-- Kaggle Notebook / Writeup: `<add your Kaggle link here>`
-- Demo video (≤3 min): `<add your YouTube link here>`
-
 ## Architecture
 
 ```
-Hugging Face (ag_news, Sci/Tech only)
+Hugging Face (dataset)
         │  datasets-server REST API
         ▼
   lib/dataset.js  ── fetch + filter label==3
@@ -88,7 +82,7 @@ Set the same environment variables in the Vercel project dashboard (Settings →
 
 - **Model used:** `gemma-3-27b-it` (configurable via `GEMMA_MODEL` env var; any instruction-tuned Gemma model id served by the same API will work, e.g. a smaller `gemma-3-4b-it` for lower latency).
 - **How it's accessed:** through Google AI Studio's Generative Language API, called via the `@ai-sdk/google` provider inside the Vercel **ai-sdk** (`generateText`). An optional local fallback (`GEMMA_PROVIDER=ollama`) calls a locally-served Gemma model through Ollama for fully offline demos.
-- **Approach:** Retrieval-Augmented Generation (RAG). The user's question is embedded and matched against Chroma-stored AG News Sci/Tech chunks; the top-k chunks are inserted into a numbered context block, and Gemma is instructed to answer **only** from that context and cite snippet numbers — this is the "fact-checking assistant" pattern rather than free-form generation, which reduces hallucination on a small, closed news corpus.
+- **Approach:** Retrieval-Augmented Generation (RAG). The user's question is embedded and matched against Chroma-stored AG News Sci/Tech chunks; the top-k chunks are inserted into a numbered context block, and Gemma is instructed to answer **only** from that context and cite snippet numbers — this is the "fact-checking extension" pattern rather than free-form generation, which reduces hallucination on a small, closed news corpus.
 - **Why Gemma is essential:** Gemma's instruction-tuned reasoning is what turns raw retrieved snippets into a grounded, cited natural-language answer — the retrieval/vector layer alone (Chroma + embeddings) can only rank text, it cannot synthesize or explain it. Gemma is also small enough to run locally via Ollama, so the same RAG pipeline can be demoed fully offline if judging Wi-Fi is unreliable.
 - **Key technical decisions:**
   - Embeddings are produced by `text-embedding-004`, not Gemma itself, because Gemma is a text-generation model and does not expose an embeddings endpoint — this is a standard RAG pattern (separate embedding model + separate generation model).
@@ -112,8 +106,5 @@ Set the same environment variables in the Vercel project dashboard (Settings →
 │   ├── vectorstore.js        # LlamaIndex chunking + ChromaDB storage/retrieval
 │   └── gemma.js              # ai-sdk Gemma generation + embeddings
 ├── public/index.html        # Dashboard UI
-├── vercel.json               # Vercel deployment routing
-├── .env.example
-├── KAGGLE_WRITEUP.md
-└── DEVPOST.md
+└── vercel.json               # Vercel deployment routing
 ```

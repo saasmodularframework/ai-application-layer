@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gemma Sci/Tech RAG — AG News</title>
+<title>Gemma Sci/Tech RAG Extension</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -42,11 +42,11 @@
   
   <header class="flex justify-between items-center border-b border-white/15 dark:border-white/15 border-slate-200 pb-5 mb-8 flex-wrap gap-4">
     <h2 class="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 via-indigo-200 to-cyan-400 dark:from-indigo-400 dark:via-indigo-200 dark:to-cyan-400 from-indigo-600 via-indigo-500 to-violet-700 bg-clip-text text-transparent">
-      Gemma Sci/Tech RAG Assistant
+      Gemma Sci/Tech RAG Extension
     </h2>
     <div class="flex items-center gap-3">
       <div id="statusBadge" class="bg-indigo-500/25 dark:bg-indigo-500/25 bg-indigo-100 text-indigo-300 dark:text-indigo-300 text-indigo-700 px-4 py-2 rounded-full font-bold text-xs md:text-sm border border-indigo-500/50">
-        Checking status…
+        Checking state
       </div>
       <button id="themeToggleBtn" class="bg-white/10 dark:bg-white/10 bg-slate-200 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-slate-300 text-slate-200 dark:text-slate-200 text-slate-800 p-2.5 rounded-xl border border-white/20 dark:border-white/20 border-slate-300 transition-all text-sm font-semibold flex items-center justify-center shadow-md" aria-label="Toggle Theme">
         <span id="themeIcon">
@@ -57,9 +57,9 @@
   </header>
 
   <div class="bg-white/[0.06] dark:bg-white/[0.06] bg-white p-6 rounded-2xl border border-white/20 dark:border-white/20 border-slate-200 mb-6 transition-all duration-200 hover:border-indigo-500/40 shadow-sm">
-    <h3 class="mt-0 font-bold text-lg text-slate-100 dark:text-slate-100 text-slate-900">1. Ingest AG News (Sci/Tech only)</h3>
+    <h3 class="mt-0 font-bold text-lg text-slate-100 dark:text-slate-100 text-slate-900">1. Ingest AG Sci/Tech News</h3>
     <p class="text-sm text-slate-300 dark:text-slate-300 text-slate-600 mt-2 leading-relaxed">
-      Pulls rows directly from Hugging Face's <code class="text-indigo-300 dark:text-indigo-300 text-indigo-600 bg-indigo-500/25 dark:bg-indigo-500/25 bg-indigo-100 px-1.5 py-0.5 rounded font-bold">ag_news</code> dataset (label = Sci/Tech), chunks them with LlamaIndex, embeds them, and stores vectors in ChromaDB.
+      Pulls rows directly from datastore <code class="text-indigo-300 dark:text-indigo-300 text-indigo-600 bg-indigo-500/25 dark:bg-indigo-500/25 bg-indigo-100 px-1.5 py-0.5 rounded font-bold">ag_news</code> dataset (label = Sci/Tech), chunks them with LlamaIndex, embeds them, and stores vectors in ChromaDB.
     </p>
     <div class="flex gap-3.5 flex-wrap items-center mt-4">
       <select id="splitSelect" class="bg-slate-950/90 dark:bg-slate-950/90 bg-white text-slate-100 dark:text-slate-100 text-slate-900 font-medium border border-white/25 dark:border-white/25 border-slate-300 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 transition-all shadow-sm">
@@ -72,21 +72,21 @@
       </button>
     </div>
     <div id="ingestLoading" class="hidden font-bold my-3 text-center bg-indigo-500/20 text-indigo-300 p-3 rounded-xl border border-indigo-500/40 text-sm">
-      ⏳ Fetching from Hugging Face and embedding (free tier pacing enabled)…
+      ⏳ Fetching and preprocessing from datastore
     </div>
     <div id="ingestResult" class="text-sm text-indigo-300 dark:text-indigo-300 text-indigo-700 mt-3 font-semibold"></div>
   </div>
 
   <div class="bg-white/[0.06] dark:bg-white/[0.06] bg-white p-6 rounded-2xl border border-white/20 dark:border-white/20 border-slate-200 transition-all duration-200 hover:border-indigo-500/40 shadow-sm">
-    <h3 class="mt-0 font-bold text-lg text-slate-100 dark:text-slate-100 text-slate-900 mb-3">2. Ask the RAG assistant</h3>
+    <h3 class="mt-0 font-bold text-lg text-slate-100 dark:text-slate-100 text-slate-900 mb-3">2. Ask the RAG Extension</h3>
     <textarea id="questionInput" placeholder="e.g. What are the recent developments in AI chips mentioned in these articles?" class="w-full bg-slate-950/90 dark:bg-slate-950/90 bg-white text-slate-100 dark:text-slate-100 text-slate-900 border border-white/25 dark:border-white/25 border-slate-300 p-4 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 transition-all resize-y min-h-[80px] box-border placeholder:text-slate-400 font-medium shadow-sm"></textarea>
     <div class="flex gap-3.5 flex-wrap items-center mt-3">
       <button id="askBtn" class="bg-indigo-600 hover:bg-indigo-500 active:translate-y-0.5 text-white font-bold px-5 py-3 rounded-xl text-sm shadow-lg shadow-indigo-600/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-        Ask Gemma
+        Ask Gemma RAG Extension
       </button>
     </div>
     <div id="queryLoading" class="hidden font-bold my-3 text-center bg-indigo-500/20 text-indigo-300 p-3 rounded-xl border border-indigo-500/40 text-sm">
-      ⏳ Retrieving context and asking Gemma…
+      ⏳ Retrieving context and asking RAG Extension
     </div>
     <div id="answerBox" class="hidden bg-white/[0.06] dark:bg-white/[0.06] bg-slate-50 p-6 rounded-xl border border-white/20 dark:border-white/20 border-slate-200 mt-5 shadow-inner">
       <div class="answer whitespace-pre-wrap leading-relaxed text-slate-100 dark:text-slate-100 text-slate-900 font-medium" id="answerText"></div>
