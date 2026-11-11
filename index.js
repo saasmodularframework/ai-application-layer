@@ -68,7 +68,7 @@ app.post('/api/query', async (req, res) => {
       .join('\n\n');
 
     const system =
-      'You are a fact-checking and topic-routing assistant for Sci/Tech news. ' +
+      'You are a fact-checking and topic-routing extension for Sci/Tech news. ' +
       'Answer ONLY using the numbered context snippets provided. ' +
       'Cite snippet numbers like [1], [2] that support each claim. ' +
       'If the context does not contain the answer, say so plainly instead of guessing.';
